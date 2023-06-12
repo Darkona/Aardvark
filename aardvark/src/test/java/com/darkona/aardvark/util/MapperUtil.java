@@ -9,9 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.text.SimpleDateFormat;
 
 public class MapperUtil {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
-    private final ObjectMapper objectMapper2 = new ObjectMapper().setDateFormat(dateFormat);
+    private final ObjectMapper objectMapper = new ObjectMapper().setDateFormat(dateFormat);
+
     public User deserializeUser(String json) throws JsonProcessingException {
         return objectMapper.readValue(json, User.class);
     }
@@ -21,10 +22,10 @@ public class MapperUtil {
     }
 
     public User deserializeResponseUser(String json) throws JsonProcessingException {
-        return objectMapper2.readValue(json, User.class);
+        return objectMapper.readValue(json, User.class);
     }
 
     public ErrorResponse deserializeErrorResponse(String json) throws JsonProcessingException {
-        return objectMapper2.readValue(json, ErrorResponse.class);
+        return objectMapper.readValue(json, ErrorResponse.class);
     }
 }

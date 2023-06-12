@@ -3,6 +3,7 @@ package com.darkona.aardvark.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -18,6 +19,7 @@ public class Phone {
     @ManyToOne
     @JoinColumn(name="USER_ID")
     @JsonIgnore //To avoid recursion in jackson deserialization :)
+    @ToString.Exclude //To avoid recursion in string serialization
     private User user;
 
     @Id
@@ -32,5 +34,6 @@ public class Phone {
 
     @Pattern(regexp = "^(\\+\\d{2})$", message = "Must be a string containing the symbol '+' and exactly two digits.")
     private String countrycode;
+
 
 }

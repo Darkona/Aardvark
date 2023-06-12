@@ -1,11 +1,11 @@
 import com.darkona.aardvark.controller.ErrorHandlingControllerAdvice
 import com.darkona.aardvark.controller.UserController
+import com.darkona.aardvark.domain.Login
 import com.darkona.aardvark.domain.User
 import com.darkona.aardvark.service.UserService
 import com.darkona.aardvark.util.FileUtil
 import com.darkona.aardvark.util.MapperUtil
 import lombok.extern.slf4j.Slf4j
-import org.hibernate.exception.ConstraintViolationException
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootContextLoader
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.mock.web.MockHttpServletResponse
@@ -24,9 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
-import java.sql.SQLException
-import java.sql.Timestamp
-import java.time.Instant
+import javax.naming.AuthenticationException
 
 //@SpringBootTest(classes = UserController.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(loader = SpringBootContextLoader, classes = UserController.class)
@@ -57,18 +56,14 @@ class UserControllerSpec extends Specification {
         then: "should return 'ok' and HttpStatus OK"
         assert response.getContentAsString() == "ok"
         assert response.status == HttpStatus.OK.value()
-
     }
 
     def "user creation in sign-up"() {
         given: "a correctly formed user json input"
-        def correct_user = FileUtil.readModelJson("correct_user.json")
 
-        def user = mapper.deserializeUser(correct_user)
-        user.setCreated(Timestamp.from(Instant.now()))
-        user.setId(UUID.randomUUID())
-        user.setIsActive(true)
-        userService.signUserUp((User) _) >> user
+        def correct_user = FileUtil.readModelJson("correct_user.json")
+        def complete_user = mapper.deserializeUser(FileUtil.readModelJson("complete_user.json"))
+        userService.signUserUp((User) _) >> complete_user
 
         when: "a post request is sent to /sign-up with a contract-appropiate user json"
         def response = doCall(correct_user)
@@ -229,7 +224,7 @@ class UserControllerSpec extends Specification {
 
     def "attempt duplicate sign-up"() {
 
-        given: "a user json input with a non-compliant email"
+        given: "a user json input with correct info but email already present in database"
 
             def correct_user = FileUtil.readModelJson("correct_user.json")
             userService.signUserUp(_ as User) >> {
@@ -256,8 +251,89 @@ class UserControllerSpec extends Specification {
         errorResponse.error.get(0).getDetail().contains("Account already exists")
     }
 
-    def "login attempt with correct token"(){
+    def "login attempt with correct info"(){
+        given: "a login json input correct info"
 
+            def login = FileUtil.readModelJson("login_credentials.json")
+            def complete_user = mapper.deserializeUser(FileUtil.readModelJson("complete_user.json"))
+            userService.getUserByLoginCredentials(_ as Login, _ as Map<String, String>) >> complete_user
+            def headers = new HttpHeaders()
+            headers.put("bearer", ["some token"])
+
+        when: "a post request is sent to /sign-up with already existing user"
+
+            def response =
+                    mvc.perform(MockMvcRequestBuilders
+                            .post("/login")
+                            .headers(headers)
+                            .accept(MediaType.APPLICATION_JSON_VALUE)
+                            .contentType(MediaType.APPLICATION_JSON_VALUE)
+                            .content(login)
+                    ).andReturn().response
+
+        then: "an error response should be sent"
+            response.status == HttpStatus.OK.value()
+    }
+
+    def "login attempt with incorrect token"(){
+        given: "a login input with incorrect token"
+
+        def login = FileUtil.readModelJson("login_credentials.json")
+        userService.getUserByLoginCredentials(_ as Login, _ as Map<String, String>) >> {
+            throw new AuthenticationException("Token")
+        }
+        def headers = new HttpHeaders()
+        headers.put("bearer", ["some token"])
+
+        when: "a post request is sent to /login with valid credentials"
+
+        def response =
+                mvc.perform(MockMvcRequestBuilders
+                        .post("/login")
+                        .headers(headers)
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(login)
+                ).andReturn().response
+
+        then: "Error response for authentication"
+            response
+            response.status == HttpStatus.UNAUTHORIZED.value()
+            def errorResponse = mapper.deserializeErrorResponse(response.getContentAsString())
+            !errorResponse.error.isEmpty()
+            errorResponse.error.get(0).getCodigo() == HttpStatus.UNAUTHORIZED.value()
+            errorResponse.error.get(0).getDetail().contains("Token")
+
+    }
+
+    def "login attempt with incorrect password"(){
+        given: "a login input with incorrect password"
+
+        def login = FileUtil.readModelJson("login_credentials.json")
+        userService.getUserByLoginCredentials(_ as Login, _ as Map<String, String>) >> {
+            throw new AuthenticationException("Password")
+        }
+        def headers = new HttpHeaders()
+        headers.put("bearer", ["some token"])
+
+        when: "a post request is sent to /login with valid credentials"
+
+        def response =
+                mvc.perform(MockMvcRequestBuilders
+                        .post("/login")
+                        .headers(headers)
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(login)
+                ).andReturn().response
+
+        then: "Error response for authentication"
+        response
+        response.status == HttpStatus.UNAUTHORIZED.value()
+        def errorResponse = mapper.deserializeErrorResponse(response.getContentAsString())
+        !errorResponse.error.isEmpty()
+        errorResponse.error.get(0).getCodigo() == HttpStatus.UNAUTHORIZED.value()
+        errorResponse.error.get(0).getDetail().contains("Password")
 
     }
 

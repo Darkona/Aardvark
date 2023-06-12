@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class JWTGeneratorImpl implements JwtGenerator {
 
-    @Value("${jwt.secret}")
+    @Value("${aardvark.jwt.secret}")
     private String secret;
 
     @Value("${aardvark.jwt.message}")
@@ -20,7 +21,7 @@ public class JWTGeneratorImpl implements JwtGenerator {
     @Override
     public String generateToken(User user) {
         return Jwts.builder()
-                .claim("Message", message)
+                .claim("Message", message + " " + UUID.randomUUID())
                 .setSubject(user.getEmail())
                 .setIssuer("Aardvark")
                 .setIssuedAt(Date.from(Instant.now()))

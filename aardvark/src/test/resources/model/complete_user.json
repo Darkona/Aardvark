@@ -1,0 +1,17 @@
+{
+  "id": "5b3bea7d-89e9-4a95-8507-ccb5630ab155",
+  "created": "Jun 12, 2023 06:26:07 PM",
+  "lastLogin": "Jun 12, 2023 06:26:07 PM",
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJNZXNzYWdlIjoiVGhlIGFhcmR2YXJrIGlzIHRoZSBvbmx5IGxpdmluZyBzcGVjaWVzIG9mIHRoZSBvcmRlciBUdWJ1bGlkZW50YXRhLiBJdCBpcyBhIG1lZGl1bS1zaXplZCwgYnVycm93aW5nLCBub2N0dXJuYWwgbWFtbWFsIG5hdGl2ZSB0byBBZnJpY2EuIGVlZGUyYjU2LTNlNzktNDQyYy04NTFiLWY2MDQ5MDE4MWM4NyIsInN1YiI6ImFhcmR2YXJrQGdtYWlsLmNvbSIsImlzcyI6IkFhcmR2YXJrIiwiaWF0IjoxNjg2NTk0MzY3LCJleHAiOjE2ODY1OTUyNjd9.LPOK5mL6KYJHKlbFK63OULWxifbU9Eu-1UMngdgKnmE",
+  "isActive": true,
+  "name": "Aardvark Ark",
+  "email": "aardvark@gmail.com",
+  "password": "$2a$10$8knFQkYl/y7UyLOYV9myfehiz9hRfN8/KRDGECnbHmO3paRHw/vNy",
+  "phones": [
+    {
+      "number": 55555555,
+      "citycode": 9,
+      "countrycode": "+56"
+    }
+  ]
+}

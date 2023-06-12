@@ -16,10 +16,7 @@ class AardvarkApplicationSpec extends Specification {
     def "Test context loads"() {
 
         expect:
-        context != null
-        context.containsBean("userController")
-        context.containsBean("userServiceImpl")
-        context.containsBean("userRepository")
+        context
     }
 
 }

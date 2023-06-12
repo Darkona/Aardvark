@@ -15,7 +15,7 @@ public class FileUtil {
         File resource = new ClassPathResource("model/"+filename).getFile();
         byte[] byteArray = Files.readAllBytes(resource.toPath());
         String jsonData = new String(byteArray);
-        log.info("Loaded test data: {}", jsonData);
+        log.info("\nLoaded test data: \n{}", jsonData);
         return jsonData;
     }
 }

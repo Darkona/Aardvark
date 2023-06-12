@@ -1,12 +1,14 @@
 package com.darkona.aardvark.domain;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Data
+@Accessors(chain = true)
 public class Login {
 
     @NotNull
