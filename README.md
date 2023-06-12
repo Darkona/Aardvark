@@ -96,17 +96,19 @@ POST http://localhost:8080/login
 **Header**
 ```json lines
 [{
-  "Bearer" : "String" //JWT Token generated at sign-up
+  "Bearer" : "String"
 }]
 ```
+-The string must be the JWT Token generated when creating the user with /sign-up
+
 **Body**
 ```json lines
 {
   "email": "String",
-  "password": "String", //Plain text password
+  "password": "String", 
 }
 ```
-
+-Password in plain text
 #### Response
 ```json lines
 {
