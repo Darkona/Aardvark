@@ -1,0 +1,12 @@
+{
+  "name": "Aardvark Ark",
+  "email": "aardvarkgmail.com",
+  "password": "Aardvark55",
+  "phones": [
+    {
+      "number": 55555555,
+      "citycode": 5,
+      "countrycode": "+56"
+    }
+  ]
+}

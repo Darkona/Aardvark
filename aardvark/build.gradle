@@ -1,0 +1,65 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.12'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'groovy'
+}
+
+apply plugin: "groovy"
+
+group = 'com.darkona'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+def lombok = 'org.projectlombok:lombok:1.18.26'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven {
+		url "https://jitpack.io"
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'com.networknt:json-schema-validator:1.0.82'
+	implementation 'com.github.JanLoebel:json-schema-validation-starter:2.3.0'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	implementation platform('org.codehaus.groovy:groovy-bom:3.0.16')
+	implementation 'org.codehaus.groovy:groovy:3.0.16'
+
+
+
+	runtimeOnly 'com.h2database:h2'
+
+	compileOnly lombok
+	testCompileOnly lombok
+	annotationProcessor lombok
+	testAnnotationProcessor lombok
+
+	testImplementation platform("org.spockframework:spock-bom:2.4-M1-groovy-3.0")
+	testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-3.0'
+	testImplementation 'org.spockframework:spock-spring:2.4-M1-groovy-3.0'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+

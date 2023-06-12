@@ -1,0 +1,15 @@
+${AnsiColor.94}
+    ,__    _,            ___
+     '.`\ /`|     _.-"```   `'.
+       ; |  /   .'             `}
+       _\|\/_.-'                 }
+   _.-"a                 {        }
+.-`  __    /._          {         }\
+'--"`  `""`   `\   ;    {         } \
+               |   } __ _\       }\  \
+               |  /;`   / :.   }`  \  \
+               | | | .-' /  / /     '. '._
+      jgs    .'__/-' ````.-'.'        '-._'-._
+Art by Joan G. Stark
+${AnsiColor.BLACK}${AnsiBackground.94}========AARDVARK========${AnsiBackground.DEFAULT}${AnsiColor.BLACK}
+========Javier Darkona (2023)========

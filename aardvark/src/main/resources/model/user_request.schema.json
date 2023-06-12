@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "user",
+  "properties": {
+    "name": {
+      "type": "string",
+      "default": "",
+      "title": "User name",
+      "description": "The user's name.",
+      "examples": [
+        "Javier Darkona"
+      ]
+    },
+    "email": {
+      "type": "string",
+      "default": "",
+      "description": "The user's email address.",
+      "title": "User email",
+      "examples": [
+        "jdarkona@gmail.com"
+      ]
+    },
+    "password": {
+      "type": "string",
+      "default": "",
+      "description": "The user's password in plain-text (dangerous)",
+      "title": "User password",
+      "examples": [
+        "Calabaza33"
+      ]
+    },
+    "phones": {
+      "type": "array",
+      "default": [],
+      "title": "User phones",
+      "description": "A list containing zero or more phones for a user.",
+      "items": {
+        "type": "object",
+        "default": {},
+        "title": "A Schema",
+        "required": [
+          "number",
+          "citycode",
+          "countrycode"
+        ],
+        "properties": {
+          "number": {
+            "type": "number",
+            "description": "The phone number without any special codes.",
+            "default": 0,
+            "title": "Phone Number",
+            "examples": [
+              55555555
+            ]
+          },
+          "citycode": {
+            "type": "integer",
+            "description": "The city code for the phone number only.",
+            "default": 0,
+            "title": "Phone citycode",
+            "examples": [
+              5
+            ]
+          },
+          "countrycode": {
+            "type": "string",
+            "description": "The international country phone code.",
+            "default": "",
+            "title": "The countrycode Schema",
+            "examples": [
+              "+56"
+            ]
+          }
+        },
+        "examples": [{
+          "number": 55555555,
+          "citycode": 9,
+          "countrycode": "+56"
+        }]
+      },
+      "examples": [
+        [{
+          "number": 66666666,
+          "citycode": 9,
+          "countrycode": "+56"
+        }]
+      ]
+    }
+  },
+  "examples": [{
+    "name": "Javier Darkona",
+    "email": "jdarkona@gmail.com",
+    "password": "Calabaza33",
+    "phones": [{
+      "number": 55555555,
+      "citycode": 9,
+      "countrycode": "+56"
+    }]
+  }],
+  "additionalProperties": false,
+  "required": [
+    "email",
+    "password"
+  ]
+}
