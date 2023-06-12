@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 public class Login {
 
     @NotNull
-    @Email(message = "Must respect correct email format: xxxxx@xxx.xxx")
+    @Email(message = "validation.email")
     private String email;
 
     @NotNull

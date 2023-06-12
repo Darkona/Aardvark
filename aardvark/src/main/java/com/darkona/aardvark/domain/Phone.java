@@ -35,5 +35,4 @@ public class Phone {
     @Pattern(regexp = "^(\\+\\d{2})$", message = "Must be a string containing the symbol '+' and exactly two digits.")
     private String countrycode;
 
-
 }

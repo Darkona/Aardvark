@@ -2,7 +2,6 @@ import com.darkona.aardvark.AardvarkApplication
 import com.darkona.aardvark.domain.Login
 import com.darkona.aardvark.repository.UserRepository
 import com.darkona.aardvark.service.UserService
-import com.darkona.aardvark.util.FileUtil
 import com.darkona.aardvark.util.MapperUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -26,7 +25,7 @@ class UserServiceSpec extends Specification {
     UserRepository userRepository
 
     def mapper = new MapperUtil()
-    def user = mapper.deserializeUser(FileUtil.readModelJson("correct_user.json"))
+    def user = mapper.deserializeUser(mapper.readModelJson("correct_user.json"))
 
     def "Service loads for testing"() {
 

@@ -38,7 +38,6 @@ import java.util.stream.Collectors;
 public class ErrorHandlingControllerAdvice extends ResponseEntityExceptionHandler implements RequestBodyAdvice {
 
     private Object requestBody;
-
     @Value("${validation.jsonSchema}")
     private String JSON_SCHEMA_VAL;
     @Value("${validation.field.database}")
@@ -70,7 +69,6 @@ public class ErrorHandlingControllerAdvice extends ResponseEntityExceptionHandle
                 .map(p -> new SingleError(HttpStatus.BAD_REQUEST.value(), new Violation(p.getField(), p.getDefaultMessage())))
                 .collect(Collectors.toList())), HttpStatus.BAD_REQUEST);
     }
-
 
     @ExceptionHandler(JsonSchemaValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

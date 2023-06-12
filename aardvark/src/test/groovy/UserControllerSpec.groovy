@@ -3,7 +3,6 @@ import com.darkona.aardvark.controller.UserController
 import com.darkona.aardvark.domain.Login
 import com.darkona.aardvark.domain.User
 import com.darkona.aardvark.service.UserService
-import com.darkona.aardvark.util.FileUtil
 import com.darkona.aardvark.util.MapperUtil
 import lombok.extern.slf4j.Slf4j
 import org.spockframework.spring.SpringBean
@@ -61,8 +60,8 @@ class UserControllerSpec extends Specification {
     def "user creation in sign-up"() {
         given: "a correctly formed user json input"
 
-        def correct_user = FileUtil.readModelJson("correct_user.json")
-        def complete_user = mapper.deserializeUser(FileUtil.readModelJson("complete_user.json"))
+        def correct_user = mapper.readModelJson("correct_user.json")
+        def complete_user = mapper.deserializeUser(mapper.readModelJson("complete_user.json"))
         userService.signUserUp((User) _) >> complete_user
 
         when: "a post request is sent to /sign-up with a contract-appropiate user json"
@@ -78,7 +77,7 @@ class UserControllerSpec extends Specification {
     def "too few uppercase validation error in sign-up"() {
         given: "a user json input with a non-compliant password"
 
-        def bad_password = FileUtil.readModelJson("bad_password_user.json")
+        def bad_password = mapper.readModelJson("bad_password_user.json")
                 .replace("xxxxxxxxxxxx", "aardvark55")
 
         when: "a post request is sent to /sign-up with the bad password user json"
@@ -98,7 +97,7 @@ class UserControllerSpec extends Specification {
     def "too many uppercase password validation error in sign-up"() {
         given: "a user json input with a non-compliant password"
 
-        def bad_password = FileUtil.readModelJson("bad_password_user.json")
+        def bad_password = mapper.readModelJson("bad_password_user.json")
                 .replace("xxxxxxxxxxxx", "AArdvark55")
 
         when: "a post request is sent to /sign-up with the bad password user json"
@@ -117,7 +116,7 @@ class UserControllerSpec extends Specification {
     def "too long password validation error in sign-up"() {
         given: "a user json input with a non-compliant password"
 
-        def bad_password = FileUtil.readModelJson("bad_password_user.json")
+        def bad_password = mapper.readModelJson("bad_password_user.json")
                 .replace("xxxxxxxxxxxx", "Aardvark55ants")
 
         when: "a post request is sent to /sign-up with the bad password user json"
@@ -134,7 +133,7 @@ class UserControllerSpec extends Specification {
     def "too short password validation error in sign-up"() {
         given: "a user json input with a non-compliant password"
 
-        def bad_password = FileUtil.readModelJson("bad_password_user.json")
+        def bad_password = mapper.readModelJson("bad_password_user.json")
                 .replace("xxxxxxxxxxxx", "Arrdvar")
 
         when: "a post request is sent to /sign-up with the bad password user json"
@@ -154,7 +153,7 @@ class UserControllerSpec extends Specification {
     def "too many numbers password validation error in sign-up"() {
         given: "a user json input with a non-compliant password"
 
-        def bad_password = FileUtil.readModelJson("bad_password_user.json")
+        def bad_password = mapper.readModelJson("bad_password_user.json")
                 .replace("xxxxxxxxxxxx", "Aardv44rk55")
 
         when: "a post request is sent to /sign-up with the bad password user json"
@@ -173,7 +172,7 @@ class UserControllerSpec extends Specification {
     def "too few numbers password validation error in sign-up"() {
         given: "a user json input with a non-compliant password"
 
-        def bad_password = FileUtil.readModelJson("bad_password_user.json")
+        def bad_password = mapper.readModelJson("bad_password_user.json")
                 .replace("xxxxxxxxxxxx", "Aardvark5")
 
         when: "a post request is sent to /sign-up with the bad password user json"
@@ -190,7 +189,7 @@ class UserControllerSpec extends Specification {
     def "empty password validation error in sign-up"() {
         given: "a user json input with a non-compliant password"
 
-        def bad_password = FileUtil.readModelJson("bad_password_user.json")
+        def bad_password = mapper.readModelJson("bad_password_user.json")
                 .replace("xxxxxxxxxxxx", "")
 
         when: "a post request is sent to /sign-up with the bad password user json"
@@ -209,7 +208,7 @@ class UserControllerSpec extends Specification {
     def "bad email validation error in sign-up"() {
         given: "a user json input with a non-compliant email"
 
-        def bad_email = FileUtil.readModelJson("bad_email_user.json")
+        def bad_email = mapper.readModelJson("bad_email_user.json")
 
         when: "a post request is sent to /sign-up with the bad email user json"
         def response = doCall(bad_email)
@@ -226,7 +225,7 @@ class UserControllerSpec extends Specification {
 
         given: "a user json input with correct info but email already present in database"
 
-            def correct_user = FileUtil.readModelJson("correct_user.json")
+            def correct_user = mapper.readModelJson("correct_user.json")
             userService.signUserUp(_ as User) >> {
                 throw new DataIntegrityViolationException("msg", new Exception("msg", new Exception("Unique")))
             }
@@ -254,8 +253,8 @@ class UserControllerSpec extends Specification {
     def "login attempt with correct info"(){
         given: "a login json input correct info"
 
-            def login = FileUtil.readModelJson("login_credentials.json")
-            def complete_user = mapper.deserializeUser(FileUtil.readModelJson("complete_user.json"))
+            def login = mapper.readModelJson("login_credentials.json")
+            def complete_user = mapper.deserializeUser(mapper.readModelJson("complete_user.json"))
             userService.getUserByLoginCredentials(_ as Login, _ as Map<String, String>) >> complete_user
             def headers = new HttpHeaders()
             headers.put("bearer", ["some token"])
@@ -278,7 +277,7 @@ class UserControllerSpec extends Specification {
     def "login attempt with incorrect token"(){
         given: "a login input with incorrect token"
 
-        def login = FileUtil.readModelJson("login_credentials.json")
+        def login = mapper.readModelJson("login_credentials.json")
         userService.getUserByLoginCredentials(_ as Login, _ as Map<String, String>) >> {
             throw new AuthenticationException("Token")
         }
@@ -309,7 +308,7 @@ class UserControllerSpec extends Specification {
     def "login attempt with incorrect password"(){
         given: "a login input with incorrect password"
 
-        def login = FileUtil.readModelJson("login_credentials.json")
+        def login = mapper.readModelJson("login_credentials.json")
         userService.getUserByLoginCredentials(_ as Login, _ as Map<String, String>) >> {
             throw new AuthenticationException("Password")
         }

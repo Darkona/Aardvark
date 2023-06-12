@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.text.SimpleDateFormat;
 
-public class MapperUtil {
+public class MapperUtil implements FileUtil {
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
     private final ObjectMapper objectMapper = new ObjectMapper().setDateFormat(dateFormat);
