@@ -20,26 +20,26 @@ Create users in database, provide tokens, and allow login.
 * "/login"
 * "/check"
 
-###  /Sign Up -- POST
+###  /Sign Up
 Creates a user in database, provides JWT in return.
 
 #### URL
 When running locally, access via:
 ```http request
-http://localhost:8080/sign-up
+POST http://localhost:8080/sign-up
 ```
 
 #### Contract
 ```json lines
 {
-  "name": String,
-  "email": String,
-  "password": String, //Plain text password
+  "name": "String",
+  "email": "String",
+  "password": "String", //Plain text password
   "phones": [
     {
-      "number": long,
-      "citycode": int,
-      "contrycode": String
+      "number": "long",
+      "citycode": "int",
+      "contrycode": "String"
     }
   ]
 }
@@ -48,19 +48,19 @@ http://localhost:8080/sign-up
 #### Response Contract
 ```json lines
 {
-  "id" : String, //UUID
-  "name": String,
-  "email": String,
-  "password": String, //Encrypted password,
-  "created" : String, //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
-  "lastLogin" : String, //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a]
-  "isActive": Boolean,
-  "token" : String, //JWT generated token]
+  "id" : "String", //UUID
+  "name": "String",
+  "email": "String",
+  "password": "String", //Encrypted password,
+  "created" : "String", //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+  "lastLogin" : "String", //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a]
+  "isActive": "Boolean",
+  "token" : "String", //JWT generated token]
   "phones": [
     {
-      "number": Long,
-      "citycode": Int,
-      "contrycode": String
+      "number": "Long",
+      "citycode": "Int",
+      "contrycode": "String"
     }
   ]
 }
@@ -76,7 +76,7 @@ http://localhost:8080/sign-up
 **Name** and **Phones** are optional.
 **Email** must be validated for proper format.
 
-### /Login --POST
+### /Login
 Attempts a login using email and password, adding the generated token.
 Validates token and password and then shows the full data of the user.
 Token is received via **header** with name **Bearer**
@@ -84,7 +84,7 @@ Token is received via **header** with name **Bearer**
 #### URL
 When running locally, access via:
 ```http request
-http://localhost:8080/login
+POST http://localhost:8080/login
 ```
 
 #### Contract
@@ -127,8 +127,8 @@ A simple health check for the application running.
 
 #### URL
 When running locally, access via:
-```
-http://localhost:8080/
+```http request
+GET http://localhost:8080/
 ```
 #### Response
 ```text
