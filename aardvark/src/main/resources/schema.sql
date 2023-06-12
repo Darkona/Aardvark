@@ -10,7 +10,8 @@ CREATE TABLE aardvark_users (
     created TIMESTAMP,
     last_login TIMESTAMP,
     email VARCHAR,
-    isActive BOOLEAN
+    isActive BOOLEAN,
+    token VARCHAR(512)
 
 );
 
@@ -19,14 +20,7 @@ CREATE TABLE phones (
     id UUID PRIMARY KEY NOT NULL,
     number LONG,
     city_code INT,
-    country_code VARCHAR
-);
-
-CREATE TABLE user_phones (
-
-    user_id UUID NOT NULL,
-    phone_id UUID NOT NULL,
-    PRIMARY KEY (user_id, phone_id),
-    FOREIGN KEY (user_id) REFERENCES aardvark_users(id),
-    FOREIGN KEY (phone_id) REFERENCES phones(id)
+    country_code VARCHAR,
+    user UUID,
+    CONSTRAINT FK_USer FOREIGN KEY (user) REFERENCES aardvark_users(id)
 );
