@@ -1,4 +1,4 @@
-# 		/\ (ˆ(oo)ˆ) /\
+# /\ (ˆ(oo)ˆ) /\
 # -AARDVARK-
 
 ## What is it
@@ -34,7 +34,7 @@ POST http://localhost:8080/sign-up
 {
   "name": "String",
   "email": "String",
-  "password": "String", //Plain text password
+  "password": "String",
   "phones": [
     {
       "number": "long",
@@ -48,14 +48,14 @@ POST http://localhost:8080/sign-up
 #### Response Contract
 ```json lines
 {
-  "id" : "String", //UUID
+  "id" : "String", 
   "name": "String",
   "email": "String",
-  "password": "String", //Encrypted password,
-  "created" : "String", //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
-  "lastLogin" : "String", //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a]
+  "password": "String", 
+  "created" : "String", 
+  "lastLogin" : "String",
   "isActive": "Boolean",
-  "token" : "String", //JWT generated token]
+  "token" : "String",
   "phones": [
     {
       "number": "Long",
@@ -65,6 +65,11 @@ POST http://localhost:8080/sign-up
   ]
 }
 ```
+- ID: Generated UUID
+- Created: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+- LastLogin: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+- Token: JWTToken
+- Password: Encrypted input password
 
 #### Validation
 ##### Password 
@@ -88,29 +93,33 @@ POST http://localhost:8080/login
 ```
 
 #### Contract
+**Header**
 ```json lines
-//Header 
 [{
-  "Bearer" : "String" //JWT Token generated at sign-up
+  "Bearer" : "String"
 }]
-//Body
+```
+- The string must be the JWT Token generated when creating the user with /sign-up
+
+**Body**
+```json lines
 {
   "email": "String",
-  "password": "String", //Plain text password
+  "password": "String", 
 }
 ```
-
+- Password in plain text
 #### Response
 ```json lines
 {
-  "id" : "String", //UUID
+  "id" : "String", 
   "name": "String",
   "email": "String",
-  "password": "String", //Encrypted password,
-  "created" : "String", //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
-  "lastLogin" : "String", //**UPDATED** Formatted Timestamp - MMM dd, yyyy hh:mm:ss a]
+  "password": "String", 
+  "created" : "String",
+  "lastLogin" : "String",
   "isActive": "Boolean",
-  "token" : "String", // **New** JWT generated token
+  "token" : "String",
   "phones": [
     {
       "number": "Long",
@@ -120,6 +129,9 @@ POST http://localhost:8080/login
   ]
 }
 ```
+- Token: **Updated** New JWT token after the call
+- LastLogin: **Updated** Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+- Password: Encrypted version
 
 #### /Check -- GET
 
@@ -142,6 +154,9 @@ GET http://localhost:8080/
 ##### Build with Gradle
 ```shell
 gradlew build
+```
+##### Run with Gradle
+```shell
 gradlew bootRun
 ```
 ##### Test with Gradle
