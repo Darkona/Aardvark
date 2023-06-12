@@ -65,11 +65,11 @@ POST http://localhost:8080/sign-up
   ]
 }
 ```
--ID: Generated UUID
--Created: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
--LastLogin: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
--Token: JWTToken
--Password: Encrypted input password
+- ID: Generated UUID
+- Created: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+- LastLogin: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+- Token: JWTToken
+- Password: Encrypted input password
 
 #### Validation
 ##### Password 
@@ -99,7 +99,7 @@ POST http://localhost:8080/login
   "Bearer" : "String"
 }]
 ```
--The string must be the JWT Token generated when creating the user with /sign-up
+- The string must be the JWT Token generated when creating the user with /sign-up
 
 **Body**
 ```json lines
@@ -108,7 +108,7 @@ POST http://localhost:8080/login
   "password": "String", 
 }
 ```
--Password in plain text
+- Password in plain text
 #### Response
 ```json lines
 {
@@ -129,9 +129,9 @@ POST http://localhost:8080/login
   ]
 }
 ```
--Token: **Updated** New JWT token after the call
--LastLogin: **Updated** Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
--Password: Encrypted version
+- Token: **Updated** New JWT token after the call
+- LastLogin: **Updated** Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+- Password: Encrypted version
 
 #### /Check -- GET
 
