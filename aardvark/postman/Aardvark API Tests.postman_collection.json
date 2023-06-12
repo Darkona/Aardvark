@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "8adeea4c-8fc3-4159-a4a8-eda1c8a4767c",
+		"name": "Aardvark API Tests",
+		"description": "Useful for testing Aardvark API\n\nWhen Sign up or Login endpoints are called, the token generated is saved as a collection variable, which then is used in Login, since the token changes after evey call.\n\nAlso tests that the password has been encrypted when shown back after Sign up.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2007290"
+	},
+	"item": [
+		{
+			"name": "Sign Up",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Recover token\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"token\", jsonData.token);\r",
+							"    pm.expect(jsonData.password).to.not.eql(pm.collectionVariables.password);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Password",
+						"value": "e3a4be2b-bed4-4186-910a-8afd3fe7ce6f",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Aardvark Ark\",\r\n    \"email\": \"aardvark@gmail.com\",\r\n    \"password\": \"Aardvark55\",\r\n    \"phones\": [\r\n        {\r\n            \"number\": 55555555,\r\n            \"citycode\": 9,\r\n            \"countrycode\": \"+56\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}sign-up",
+					"host": [
+						"{{host}}sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Recover token\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var token = pm.response.headers.get(\"token\");\r",
+							"    console.log(\"New token obtained: \" + token);\r",
+							"    console.log(\"Saving new token to collection variables\");\r",
+							"    pm.collectionVariables.set(\"token\", token);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Bearer",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Bearer",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"JDARKONA@gmAil.com\",\r\n    \"password\": \"C4labazaaaaaaaa5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}login",
+					"host": [
+						"{{host}}login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost:8080/",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "C4labaza5",
+			"type": "string"
+		}
+	]
+}

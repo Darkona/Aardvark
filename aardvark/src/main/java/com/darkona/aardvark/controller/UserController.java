@@ -45,7 +45,6 @@ public class UserController {
         log.info("Receiving request: {}", user);
         return new ResponseEntity<>(userService.signUserUp(user), HttpStatus.CREATED);
     }
-
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> login(@Valid @RequestBody Login login, @RequestHeader Map<String, String> headers) throws UserNotFoundException,
             AuthenticationException {
