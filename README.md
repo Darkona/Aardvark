@@ -48,7 +48,7 @@ POST http://localhost:8080/sign-up
 #### Response Contract
 ```json lines
 {
-  "id" : "String", //UUID
+  "id" : "String", 
   "name": "String",
   "email": "String",
   "password": "String", 
@@ -65,6 +65,7 @@ POST http://localhost:8080/sign-up
   ]
 }
 ```
+-ID: Generated UUID
 -Created: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
 -LastLogin: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
 -Token: JWTToken
@@ -107,7 +108,7 @@ POST http://localhost:8080/login
 #### Response
 ```json lines
 {
-  "id" : "String", //UUID
+  "id" : "String", 
   "name": "String",
   "email": "String",
   "password": "String", 
@@ -124,9 +125,9 @@ POST http://localhost:8080/login
   ]
 }
 ```
--Token: New JWT token
+-Token: **Updated** New JWT token after the call
 -LastLogin: **Updated** Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
--Password: Encrypted form
+-Password: Encrypted version
 
 #### /Check -- GET
 
