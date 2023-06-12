@@ -1,4 +1,4 @@
-# 		/\ (ˆ(oo)ˆ) /\
+# /\ (ˆ(oo)ˆ) /\
 # -AARDVARK-
 
 ## What is it
@@ -34,7 +34,7 @@ POST http://localhost:8080/sign-up
 {
   "name": "String",
   "email": "String",
-  "password": "String", //Plain text password
+  "password": "String",
   "phones": [
     {
       "number": "long",
@@ -51,11 +51,11 @@ POST http://localhost:8080/sign-up
   "id" : "String", //UUID
   "name": "String",
   "email": "String",
-  "password": "String", //Encrypted password,
-  "created" : "String", //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
-  "lastLogin" : "String", //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a]
+  "password": "String", 
+  "created" : "String", 
+  "lastLogin" : "String",
   "isActive": "Boolean",
-  "token" : "String", //JWT generated token]
+  "token" : "String",
   "phones": [
     {
       "number": "Long",
@@ -65,6 +65,10 @@ POST http://localhost:8080/sign-up
   ]
 }
 ```
+-Created: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+-LastLogin: Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+-Token: JWTToken
+-Password: Encrypted input password
 
 #### Validation
 ##### Password 
@@ -106,11 +110,11 @@ POST http://localhost:8080/login
   "id" : "String", //UUID
   "name": "String",
   "email": "String",
-  "password": "String", //Encrypted password,
-  "created" : "String", //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
-  "lastLogin" : "String", //**UPDATED** Formatted Timestamp - MMM dd, yyyy hh:mm:ss a]
+  "password": "String", 
+  "created" : "String",
+  "lastLogin" : "String",
   "isActive": "Boolean",
-  "token" : "String", // **New** JWT generated token
+  "token" : "String",
   "phones": [
     {
       "number": "Long",
@@ -120,6 +124,9 @@ POST http://localhost:8080/login
   ]
 }
 ```
+-Token: New JWT token
+-LastLogin: **Updated** Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+-Password: Encrypted form
 
 #### /Check -- GET
 
@@ -142,6 +149,9 @@ GET http://localhost:8080/
 ##### Build with Gradle
 ```shell
 gradlew build
+```
+##### Run with Gradle
+```shell
 gradlew bootRun
 ```
 ##### Test with Gradle
