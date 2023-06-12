@@ -39,16 +39,16 @@ class UserControllerSpec extends Specification {
     UserController userController
 
     @SpringBean
-    UserService userService = Mock();
+    UserService userService = Mock()
 
     private MockMvc mvc
 
     def setup() {
         mvc = MockMvcBuilders.standaloneSetup(userController)
                 .setControllerAdvice(new ErrorHandlingControllerAdvice())
-                .build();
+                .build()
     }
-    def mapper = new MapperUtil();
+    def mapper = new MapperUtil()
 
     def "Controller loads for testing"() {
         when: "a get request is sent to the /check endpoint"
@@ -232,7 +232,6 @@ class UserControllerSpec extends Specification {
         given: "a user json input with a non-compliant email"
 
             def correct_user = FileUtil.readModelJson("correct_user.json")
-            def user = mapper.deserializeUser(correct_user)
             userService.signUserUp(_ as User) >> {
                 throw new DataIntegrityViolationException("msg", new Exception("msg", new Exception("Unique")))
             }

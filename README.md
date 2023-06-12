@@ -91,31 +91,31 @@ POST http://localhost:8080/login
 ```json lines
 //Header 
 [{
-  "Bearer" : "JWT Token generated at sign-up"
+  "Bearer" : "String" //JWT Token generated at sign-up
 }]
 //Body
 {
-  "email": String,
-  "password": String, //Plain text password
+  "email": "String",
+  "password": "String", //Plain text password
 }
 ```
 
 #### Response
 ```json lines
 {
-  "id" : String, //UUID
-  "name": String,
-  "email": String,
-  "password": String, //Encrypted password,
-  "created" : String, //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
-  "lastLogin" : String, //**UPDATED** Formatted Timestamp - MMM dd, yyyy hh:mm:ss a]
-  "isActive": Boolean,
-  "token" : String, // **New** JWT generated token
+  "id" : "String", //UUID
+  "name": "String",
+  "email": "String",
+  "password": "String", //Encrypted password,
+  "created" : "String", //Formatted Timestamp - MMM dd, yyyy hh:mm:ss a
+  "lastLogin" : "String", //**UPDATED** Formatted Timestamp - MMM dd, yyyy hh:mm:ss a]
+  "isActive": "Boolean",
+  "token" : "String", // **New** JWT generated token
   "phones": [
     {
-      "number": Long,
-      "citycode": Int,
-      "contrycode": String
+      "number": "Long",
+      "citycode": "Int",
+      "contrycode": "String"
     }
   ]
 }
@@ -141,6 +141,10 @@ GET http://localhost:8080/
 
 ##### Build with Gradle
 ```shell
-gradlew build bootRun
+gradlew build
+gradlew bootRun
 ```
-
+##### Test with Gradle
+```shell
+gradlew test
+```
