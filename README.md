@@ -93,12 +93,14 @@ POST http://localhost:8080/login
 ```
 
 #### Contract
+**Header**
 ```json lines
-//Header 
 [{
   "Bearer" : "String" //JWT Token generated at sign-up
 }]
-//Body
+```
+**Body**
+```json lines
 {
   "email": "String",
   "password": "String", //Plain text password
