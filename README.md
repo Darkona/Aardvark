@@ -8,7 +8,6 @@ validation.
 Contract enforcement is done via JSON Schema validation, and Spring validation for data.
 Password encryption with Spring Security in database.
 
-Done as a test for GlobalLogic.
 
 ## What does it do
 
